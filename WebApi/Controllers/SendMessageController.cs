@@ -16,14 +16,10 @@
 
 using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
-using OpenTelemetry.Trace;
-using RestEase;
 using Utils.Messaging;
 using WebApi.GitHub;
 
@@ -47,13 +43,9 @@ namespace WebApi.Controllers
             this.gitHubApi = gitHubApi ?? throw new System.ArgumentNullException(nameof(gitHubApi));
         }
 
-        [HttpGet("{message}")]
-        public async Task<ActionResult<string>> Get([FromRoute] string message)
-        {
-            //Activity.Current.SetStatus(Status.Error.WithDescription("Hát ez rohadtul nincs itt bazze!"));
-            //return NotFound();
-            throw new Exception("Rigó ezt csak neked dobtam!");
-
+        [HttpGet]
+        public async Task<ActionResult<string>> Get()
+        {            
             using var _ = ActivitySource.StartActivity("Sending a message");
             this.logger.LogInformation("Sending a message");
 
@@ -61,8 +53,7 @@ namespace WebApi.Controllers
             Baggage.Current.SetBaggage("nexogen.message.dani", "dani");
 
             var user = await this.gitHubApi.GetUserAsync("dbiro");
-
-            //return string.Join(Environment.NewLine, Enumerable.Range(0, 5).AsParallel().Select(_ => this.messageSender.SendMessage(user.Name)));
+            
             return this.messageSender.SendMessage(user.Name);
         }
     }

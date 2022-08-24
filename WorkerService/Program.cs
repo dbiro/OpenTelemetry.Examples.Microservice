@@ -94,7 +94,7 @@ namespace WorkerService
                                 b.Endpoint = new Uri($"http://{zipkinHostName}:9411/api/v2/spans");
                             })
                             .AddJaegerExporter(b =>
-                            {
+                            {                                
                                 b.AgentHost = Environment.GetEnvironmentVariable("JAEGER_AGENT_HOST") ?? "localhost";
                                 b.AgentPort = Convert.ToInt32(Environment.GetEnvironmentVariable("JAEGER_AGENT_PORT") ?? "6831");
                             });
