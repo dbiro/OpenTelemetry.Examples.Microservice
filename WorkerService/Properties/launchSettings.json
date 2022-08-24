@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WorkerService": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "traceparent": "00-93d55898ea203dc18d378f82f20d59e6-4d3045a96bfc4e42-01"
+      }
+    }
+  }
+}
